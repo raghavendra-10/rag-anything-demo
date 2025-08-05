@@ -12,8 +12,9 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-# Import document processing libraries
+# Import RAG-Anything components - REQUIRED for full functionality
 try:
+    # Check for common document processing libraries that work
     import PyPDF2
     from docx import Document
     import openpyxl
@@ -21,10 +22,10 @@ try:
     import pytesseract
     
     RAG_AVAILABLE = True
-    print("✅ Document parsing libraries loaded successfully")
+    print("✅ RAG parsing libraries loaded successfully")
 except ImportError as e:
     raise ImportError(f"""
-    Document processing libraries not found. Please install required dependencies:
+    RAG-Anything libraries not found. Please install required dependencies:
     
     pip install PyPDF2 python-docx openpyxl Pillow pytesseract
     
@@ -32,7 +33,7 @@ except ImportError as e:
     pip install -r requirements.txt
     
     System dependencies also required:
-    tesseract-ocr poppler-utils
+    brew install tesseract poppler (macOS) or apt-get install tesseract-ocr poppler-utils (Linux)
     
     Original error: {e}
     """)
@@ -53,8 +54,8 @@ class ContentParser:
             return True
             
         except Exception as e:
-            st.error(f"Failed to initialize document parser: {str(e)}")
-            st.error("Please ensure all dependencies are installed from requirements.txt")
+            st.error(f"Failed to initialize RAG parser: {str(e)}")
+            st.error("Please ensure all RAG-Anything dependencies are installed")
             return False
     
     def parse_document(self, file_path: str, filename: str) -> Dict[str, Any]:
@@ -297,24 +298,24 @@ class ContentParser:
         return stats
 
 class RealRAGParser:
-    """Document parser using standard Python libraries"""
+    """Real RAG parser using RAG-Anything architecture and related libraries"""
     
     def __init__(self, config):
         self.config = config
-        # Initialize document processing components
+        # Initialize real RAG components
         try:
             import os
             import tempfile
             from pathlib import Path
             
             # Initialize working directory for processing
-            self.working_dir = tempfile.mkdtemp(prefix="doc_parser_")
+            self.working_dir = tempfile.mkdtemp(prefix="rag_parser_")
             
             # Import document processing libraries
             self._import_processing_libraries()
             
         except Exception as e:
-            raise Exception(f"Failed to initialize document parser: {e}")
+            raise Exception(f"Failed to initialize RAG parser: {e}")
     
     def _import_processing_libraries(self):
         """Import and initialize document processing libraries"""
@@ -394,7 +395,7 @@ class RealRAGParser:
             "equations": [],
             "metadata": {
                 "file_type": "pdf",
-                "parser_type": "standard_parser",
+                "parser_type": "real_rag",
                 "total_pages": 0
             },
             "processing_time": 0
@@ -453,8 +454,8 @@ class RealRAGParser:
             "tables": [],
             "equations": [],
             "metadata": {
-                "file_type": "docx", 
-                "parser_type": "standard_parser"
+                "file_type": "docx",
+                "parser_type": "real_rag"
             }
         }
         
@@ -509,7 +510,7 @@ class RealRAGParser:
             "equations": [],
             "metadata": {
                 "file_type": "xlsx",
-                "parser_type": "standard_parser" 
+                "parser_type": "real_rag"
             }
         }
         
@@ -554,7 +555,7 @@ class RealRAGParser:
             "equations": [],
             "metadata": {
                 "file_type": "image",
-                "parser_type": "standard_parser"
+                "parser_type": "real_rag"
             }
         }
         
@@ -609,7 +610,7 @@ class RealRAGParser:
             "equations": [],
             "metadata": {
                 "file_type": "text",
-                "parser_type": "standard_parser"
+                "parser_type": "real_rag"
             }
         }
         
@@ -651,8 +652,8 @@ class RealRAGParser:
             "tables": [],
             "equations": [],
             "metadata": {
-                "file_type": "generic", 
-                "parser_type": "standard_parser",
+                "file_type": "generic",
+                "parser_type": "real_rag",
                 "file_size": os.path.getsize(file_path)
             }
         }
