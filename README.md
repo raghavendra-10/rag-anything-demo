@@ -16,30 +16,31 @@ A Streamlit application demonstrating RAG-Anything's multi-modal content parsing
 
 ## 🚀 Quick Start
 
-### One-Command Setup
+### Simple Setup (2 Commands)
 
 ```bash
-# Clone the repository
+# 1. Clone and navigate
 git clone https://github.com/yourusername/rag-anything-demo.git
 cd rag-anything-demo
 
-# Setup everything (dependencies, virtual environment, system packages)
-chmod +x setup.sh && ./setup.sh
-
-# Start the application
+# 2. Run the app (auto-setup on first run)
 ./run.sh
 ```
 
-That's it! The app will open in your browser at `http://localhost:8501`
+The `run.sh` script will automatically:
+- Create virtual environment if needed
+- Install Python dependencies
+- Install system dependencies (with prompts)
+- Start the Streamlit application
 
-### Manual Setup (if needed)
+### Manual Setup
 
 ```bash
 # Create virtual environment
 python3 -m venv venv
 source venv/bin/activate
 
-# Install dependencies
+# Install Python dependencies
 pip install -r requirements.txt
 
 # Install system dependencies
@@ -116,8 +117,8 @@ rag-anything-demo/
 ├── config.py           # Configuration management
 ├── requirements.txt    # Python dependencies
 ├── packages.txt        # System dependencies (for cloud)
-├── setup.sh           # One-command setup script
-├── run.sh             # Quick start script
+├── run.sh             # Auto-setup and run script
+├── README.md          # Complete documentation
 └── .streamlit/
     └── config.toml    # Streamlit configuration
 ```
@@ -136,18 +137,41 @@ streamlit run app.py --logger.level=debug
 
 ## ☁️ Cloud Deployment
 
-### Streamlit Cloud
-1. Push your code to GitHub
+### Streamlit Cloud (Recommended)
+1. Fork/push your code to GitHub
 2. Go to [share.streamlit.io](https://share.streamlit.io)
-3. Connect your repository
-4. Deploy with `app.py` as the main file
+3. Click "New app" and select your repository
+4. Set main file: `app.py`
+5. Click "Deploy"
 
-The `packages.txt` file ensures system dependencies (tesseract, poppler) are installed automatically.
+**Files configured for cloud deployment:**
+- `packages.txt` - System dependencies (tesseract, poppler-utils)
+- `requirements.txt` - Python packages (cloud-optimized)
+- `.streamlit/config.toml` - Streamlit configuration
+
+### Docker Deployment
+```dockerfile
+FROM python:3.9-slim
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    tesseract-ocr poppler-utils libmagic1 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+EXPOSE 8501
+
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+```
 
 ### Other Platforms
-- **Heroku**: See `DEPLOYMENT.md` for detailed instructions
-- **Docker**: Use the provided Dockerfile
-- **Railway**: One-click deployment from GitHub
+- **Railway**: Connect GitHub repo for one-click deployment
+- **Heroku**: Add buildpacks for apt and python
+- **Google Cloud Run**: Use `gcloud run deploy --source .`
 
 ## 📊 Performance
 
