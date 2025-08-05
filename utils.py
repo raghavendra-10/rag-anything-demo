@@ -12,12 +12,8 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-# Import RAG-Anything components - REQUIRED
+# Import document processing libraries
 try:
-    # Try to import what's actually available in LightRAG
-    import lightrag
-    
-    # Check for common document processing libraries that work
     import PyPDF2
     from docx import Document
     import openpyxl
@@ -25,18 +21,18 @@ try:
     import pytesseract
     
     RAG_AVAILABLE = True
-    print("✅ RAG parsing libraries loaded successfully")
+    print("✅ Document parsing libraries loaded successfully")
 except ImportError as e:
     raise ImportError(f"""
-    RAG-Anything libraries not found. Please install required dependencies:
+    Document processing libraries not found. Please install required dependencies:
     
-    pip install lightrag PyPDF2 python-docx openpyxl Pillow pytesseract
+    pip install PyPDF2 python-docx openpyxl Pillow pytesseract
     
     Or install all dependencies:
     pip install -r requirements.txt
     
     System dependencies also required:
-    brew install tesseract poppler
+    tesseract-ocr poppler-utils
     
     Original error: {e}
     """)
