@@ -1,9 +1,6 @@
 # Core dependencies
 streamlit>=1.28.0
 
-# RAG libraries (cloud-compatible versions)
-lightrag>=0.1.0b6
-
 # Data processing
 pandas>=2.0.0
 numpy>=1.24.0
@@ -13,7 +10,6 @@ python-docx>=0.8.11
 openpyxl>=3.1.0
 PyPDF2>=3.0.0
 Pillow>=10.0.0
-python-magic>=0.4.27
 
 # Text processing and markdown
 markdown>=3.5.0
@@ -22,7 +18,3 @@ beautifulsoup4>=4.12.0
 # OCR and image processing
 pytesseract>=0.3.10
 opencv-python-headless>=4.8.0
-
-# Lightweight ML dependencies for cloud (CPU-only versions)
-torch>=2.0.0
-transformers>=4.30.0
