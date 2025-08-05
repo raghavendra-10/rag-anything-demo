@@ -51,13 +51,13 @@ class RAGParsingDemo:
     
     def render_header(self):
         """Render the application header"""
-        st.markdown('<h1 class="main-header">🔍 RAG-Anything Multi-Modal Parser</h1>', 
+        st.markdown('<h1 class="main-header">📚 Multi-Modal Document Parser</h1>', 
                    unsafe_allow_html=True)
         
         st.markdown("""
         <div style="text-align: center; margin-bottom: 2rem; color: #666;">
-        Demonstrate RAG-Anything's multi-modal content parsing architecture.<br>
-        Upload documents to see how different content types are extracted and structured <strong>without LLM integration</strong>.
+        Parse and extract content from various document formats.<br>
+        Upload documents to see how different content types are extracted and structured.
         </div>
         """, unsafe_allow_html=True)
         
@@ -72,8 +72,8 @@ class RAGParsingDemo:
             # Show parser information
             if hasattr(self.parser, 'rag_instance') and self.parser.rag_instance:
                 parser_type = type(self.parser.rag_instance).__name__
-                st.success("🚀 Using Real RAG Parser")
-                st.caption("Multi-modal document parsing with LightRAG")
+                st.success("🚀 Using Document Parser")
+                st.caption("Multi-modal document parsing with standard libraries")
                 st.caption(f"Parser: {parser_type}")
             
             # Show available capabilities
